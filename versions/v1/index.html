@@ -1,0 +1,537 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="pebble（ペブル）— 大阪・天満橋、大川のほとりに佇む10席のレストラン。安藤忠雄建築の5階で、ワインと現代イタリアンのコースを。日々の情報はInstagram @pebble_wine_osaka にて。">
+<title>pebble — 大阪・天満橋 ワインと現代イタリアン</title>
+<style>
+  :root {
+    --paper: #F1F0ED;
+    --ink: #22241F;
+    --stone: #75786F;
+    --wine: #722F42;
+    --line: rgba(34, 36, 31, 0.16);
+    --ripple: rgba(34, 36, 31, 0.20);
+    --card: rgba(34, 36, 31, 0.035);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #191B1A;
+      --ink: #E3E1DB;
+      --stone: #9A9D93;
+      --wine: #C98CA0;
+      --line: rgba(227, 225, 219, 0.18);
+      --ripple: rgba(227, 225, 219, 0.22);
+      --card: rgba(227, 225, 219, 0.045);
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #191B1A;
+    --ink: #E3E1DB;
+    --stone: #9A9D93;
+    --wine: #C98CA0;
+    --line: rgba(227, 225, 219, 0.18);
+    --ripple: rgba(227, 225, 219, 0.22);
+    --card: rgba(227, 225, 219, 0.045);
+  }
+  :root[data-theme="light"] {
+    --paper: #F1F0ED;
+    --ink: #22241F;
+    --stone: #75786F;
+    --wine: #722F42;
+    --line: rgba(34, 36, 31, 0.16);
+    --ripple: rgba(34, 36, 31, 0.20);
+    --card: rgba(34, 36, 31, 0.035);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "Times New Roman", serif;
+    font-size: 16px;
+    line-height: 2;
+    letter-spacing: 0.06em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .gothic {
+    font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "YuGothic", "Noto Sans JP", sans-serif;
+  }
+
+  a { color: inherit; }
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--wine);
+    outline-offset: 3px;
+  }
+
+  /* ---------- hero ---------- */
+  .hero {
+    position: relative;
+    min-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 48px 24px;
+    overflow: hidden;
+  }
+  .hero canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .hero > .inner { position: relative; }
+  .hero .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.42em;
+    text-indent: 0.42em;
+    color: var(--stone);
+    text-transform: uppercase;
+    margin: 0 0 28px;
+  }
+  .wordmark {
+    font-size: clamp(56px, 11vw, 104px);
+    font-weight: 400;
+    letter-spacing: 0.30em;
+    text-indent: 0.30em;
+    line-height: 1.1;
+    margin: 0;
+    text-wrap: balance;
+  }
+  .hero .tagline {
+    margin: 36px 0 0;
+    font-size: 17px;
+    letter-spacing: 0.22em;
+    text-indent: 0.22em;
+  }
+  .hero .sub {
+    margin: 14px 0 0;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    color: var(--stone);
+  }
+  .hero .ig-hint {
+    position: absolute;
+    bottom: 28px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-indent: 0.28em;
+    color: var(--stone);
+  }
+  .hero .ig-hint a { text-decoration: none; border-bottom: 1px solid var(--line); padding-bottom: 3px; }
+  .hero .ig-hint a:hover { color: var(--wine); border-color: var(--wine); }
+
+  /* ---------- sections ---------- */
+  .section {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 96px 28px 0;
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 0 28px;
+  }
+  .section:last-of-type { padding-bottom: 120px; }
+
+  .vlabel {
+    writing-mode: vertical-rl;
+    font-size: 12px;
+    letter-spacing: 0.5em;
+    color: var(--stone);
+    border-right: 1px solid var(--line);
+    padding-right: 16px;
+    height: fit-content;
+    min-height: 120px;
+  }
+
+  .section h2 {
+    font-size: 24px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    margin: 0 0 32px;
+    text-wrap: balance;
+  }
+  .section p {
+    max-width: 36em;
+    margin: 0 0 1.6em;
+  }
+  .section .en-note {
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin: 0 0 10px;
+  }
+
+  .quiet { color: var(--stone); font-size: 14px; }
+
+  /* ---------- courses ---------- */
+  .courses { border-top: 1px solid var(--line); margin-top: 8px; }
+  .courses .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 24px;
+    padding: 20px 4px;
+    border-bottom: 1px solid var(--line);
+  }
+  .courses .name { letter-spacing: 0.18em; }
+  .courses .name small {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-top: 2px;
+  }
+  .courses .price {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+  .fineprint { font-size: 12px; color: var(--stone); margin-top: 14px; }
+
+  /* ---------- instagram ---------- */
+  .ig-card {
+    border: 1px solid var(--line);
+    background: var(--card);
+    padding: 36px 32px;
+    margin-top: 8px;
+  }
+  .ig-card .handle {
+    font-size: 15px;
+    letter-spacing: 0.18em;
+    margin: 0 0 16px;
+  }
+  .ig-roles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin: 24px 0 28px;
+  }
+  .ig-roles .role h3 {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    color: var(--stone);
+    margin: 0 0 10px;
+    text-transform: uppercase;
+  }
+  .ig-roles .role ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 13.5px;
+    line-height: 2.1;
+  }
+  .ig-roles .role li::before {
+    content: "── ";
+    color: var(--stone);
+  }
+  .btn {
+    display: inline-block;
+    padding: 14px 36px;
+    border: 1px solid var(--ink);
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 0.3em;
+    text-indent: 0.3em;
+    transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  }
+  .btn:hover { background: var(--ink); color: var(--paper); }
+  .btn.wine { border-color: var(--wine); color: var(--wine); }
+  .btn.wine:hover { background: var(--wine); color: var(--paper); }
+
+  /* ---------- info ---------- */
+  .info-table { border-top: 1px solid var(--line); width: 100%; border-collapse: collapse; }
+  .info-table th, .info-table td {
+    border-bottom: 1px solid var(--line);
+    padding: 16px 8px;
+    text-align: left;
+    vertical-align: top;
+    font-weight: 400;
+    font-size: 14.5px;
+  }
+  .info-table th {
+    width: 8.5em;
+    color: var(--stone);
+    letter-spacing: 0.2em;
+    white-space: nowrap;
+  }
+  .info-table td { font-variant-numeric: tabular-nums; }
+
+  /* ---------- reserve ---------- */
+  .reserve-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+    margin-top: 28px;
+  }
+  .tel {
+    font-size: 20px;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    font-variant-numeric: tabular-nums;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 2px;
+  }
+  .tel:hover { color: var(--wine); border-color: var(--wine); }
+
+  /* ---------- footer ---------- */
+  footer {
+    border-top: 1px solid var(--line);
+    margin-top: 120px;
+    padding: 48px 28px 64px;
+    text-align: center;
+  }
+  footer .mark {
+    font-size: 20px;
+    letter-spacing: 0.34em;
+    text-indent: 0.34em;
+    margin: 0 0 18px;
+  }
+  footer nav {
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+  }
+  footer nav a { text-decoration: none; color: var(--stone); }
+  footer nav a:hover { color: var(--wine); }
+  footer .copy { margin-top: 28px; font-size: 11px; color: var(--stone); letter-spacing: 0.2em; }
+
+  @media (max-width: 620px) {
+    .section { grid-template-columns: 1fr; gap: 0; padding-top: 76px; }
+    .vlabel {
+      writing-mode: horizontal-tb;
+      border-right: none;
+      border-bottom: 1px solid var(--line);
+      padding: 0 0 10px;
+      margin-bottom: 26px;
+      min-height: 0;
+    }
+    .ig-roles { grid-template-columns: 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn { transition: none; }
+  }
+</style>
+</head>
+<body>
+<header class="hero">
+  <canvas id="ripples" aria-hidden="true"></canvas>
+  <div class="inner">
+    <p class="eyebrow gothic">Osaka · Temmabashi</p>
+    <h1 class="wordmark">pebble</h1>
+    <p class="tagline">大川のほとり、十席のレストラン。</p>
+    <p class="sub gothic">安藤忠雄建築の五階に、ワインと現代イタリアンの一皿を。</p>
+  </div>
+  <p class="ig-hint gothic">日々の更新は <a href="https://www.instagram.com/pebble_wine_osaka/" target="_blank" rel="noopener">Instagram</a> で</p>
+</header>
+
+<section class="section" id="concept">
+  <span class="vlabel gothic" aria-hidden="true">はじまり</span>
+  <div>
+    <p class="en-note gothic">Concept</p>
+    <h2>小さな石ころ、と名づけた店。</h2>
+    <p>pebble ── 水辺の小石。2024年7月、天満橋のほとりに小さなワインバーとして生まれ、2025年、シェフ・夏川を迎えてレストランになりました。</p>
+    <p>場所は、安藤忠雄氏設計の建築の五階。かつて作家・堺屋太一氏が暮らした住まいの記憶を残す空間から、窓の外にはゆっくりと大川が流れます。</p>
+    <p>川に投げた小石の波紋のように、一皿とひと口のワインが、その日の記憶として静かに広がっていくこと。それがこの店の願いです。</p>
+  </div>
+</section>
+
+<section class="section" id="cuisine">
+  <span class="vlabel gothic" aria-hidden="true">料理とワイン</span>
+  <div>
+    <p class="en-note gothic">Cuisine &amp; Wine</p>
+    <h2>ワインに寄り添う、現代のイタリアン。</h2>
+    <p>イタリアンを基調に、季節の食材を現代的な手法で仕立てるコース料理。オーナーソムリエが世界の造り手から選ぶワインと、皿ごとの対話をお楽しみください。</p>
+    <div class="courses">
+      <div class="row">
+        <span class="name">昼のコース<small class="gothic">Lunch Course</small></span>
+        <span class="price">¥8,800 〜</span>
+      </div>
+      <div class="row">
+        <span class="name">夜のコース<small class="gothic">Dinner Course</small></span>
+        <span class="price">¥10,800 〜 ¥19,800</span>
+      </div>
+    </div>
+    <p class="fineprint gothic">価格は税込・サービス料（7%）別。ワインペアリングは当日のご案内となります。内容・価格は季節により変わります。最新のコースは Instagram にてお知らせしています。</p>
+  </div>
+</section>
+
+<section class="section" id="space">
+  <span class="vlabel gothic" aria-hidden="true">空間</span>
+  <div>
+    <p class="en-note gothic">Space</p>
+    <h2>カウンター六席、個室四席。</h2>
+    <p>打ち放しの静けさの中に、カウンター六席と、四名様までの個室をひとつ。大川を望む窓辺で、料理人とソムリエの手元を眺めながらの時間をお過ごしいただけます。</p>
+    <p class="quiet">全席ご予約制です。おひとり様も歓迎いたします。</p>
+  </div>
+</section>
+
+<section class="section" id="instagram">
+  <span class="vlabel gothic" aria-hidden="true">日々のこと</span>
+  <div>
+    <p class="en-note gothic">Instagram</p>
+    <h2>日々のことは、Instagramで。</h2>
+    <p>本日の一皿、届いたばかりのワイン、季節の移ろい。動いている情報はすべて Instagram で発信しています。このサイトは、コースや営業時間、ご予約といった「変わらないこと」のための場所です。</p>
+    <div class="ig-card">
+      <p class="handle gothic">@pebble_wine_osaka</p>
+      <div class="ig-roles gothic">
+        <div class="role">
+          <h3>Instagram でお知らせ</h3>
+          <ul>
+            <li>本日のお皿・新しいコース</li>
+            <li>入荷したワイン</li>
+            <li>臨時休業・空席のご案内</li>
+          </ul>
+        </div>
+        <div class="role">
+          <h3>このサイトでご案内</h3>
+          <ul>
+            <li>コンセプトとコース料金</li>
+            <li>営業時間・アクセス</li>
+            <li>ご予約の窓口</li>
+          </ul>
+        </div>
+      </div>
+      <a class="btn" href="https://www.instagram.com/pebble_wine_osaka/" target="_blank" rel="noopener">Instagram を見る</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="info">
+  <span class="vlabel gothic" aria-hidden="true">ご案内</span>
+  <div>
+    <p class="en-note gothic">Information</p>
+    <h2>営業時間・アクセス</h2>
+    <table class="info-table">
+      <tbody>
+        <tr>
+          <th scope="row">営業時間</th>
+          <td>月・火・木・土・祝　12:00–14:30 ／ 18:00–22:00<br>水・金　18:00–22:00</td>
+        </tr>
+        <tr>
+          <th scope="row">定休日</th>
+          <td>日曜日</td>
+        </tr>
+        <tr>
+          <th scope="row">住所</th>
+          <td>〒530-0043　大阪府大阪市北区天満3-1-2　TSビル 5F<br>
+          <a href="https://maps.app.goo.gl/BENYgtLQY3g4eQJY9" target="_blank" rel="noopener" class="quiet gothic">Google マップで開く →</a></td>
+        </tr>
+        <tr>
+          <th scope="row">アクセス</th>
+          <td>Osaka Metro 谷町線・京阪本線「天満橋」駅より徒歩約3分</td>
+        </tr>
+        <tr>
+          <th scope="row">お電話</th>
+          <td>06-6356-0141</td>
+        </tr>
+        <tr>
+          <th scope="row">お支払い</th>
+          <td>各種クレジットカード（VISA / Master / JCB / AMEX / Diners）</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="section" id="reserve">
+  <span class="vlabel gothic" aria-hidden="true">ご予約</span>
+  <div>
+    <p class="en-note gothic">Reservation</p>
+    <h2>ご予約をお待ちしています。</h2>
+    <p>十席の小さな店のため、ご予約のうえお越しください。オンラインでのご予約が便利です。当日のご相談はお電話にて承ります。</p>
+    <div class="reserve-actions">
+      <a class="btn wine" href="https://www.tablecheck.com/ja/pebble" target="_blank" rel="noopener">オンライン予約</a>
+      <a class="tel" href="tel:0663560141">06-6356-0141</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p class="mark">pebble</p>
+  <nav class="gothic">
+    <a href="#concept">Concept</a>
+    <a href="#cuisine">Cuisine</a>
+    <a href="#instagram">Instagram</a>
+    <a href="#info">Information</a>
+    <a href="#reserve">Reservation</a>
+  </nav>
+  <p class="copy gothic">© pebble, Osaka</p>
+</footer>
+
+<script>
+(function () {
+  var canvas = document.getElementById('ripples');
+  var ctx = canvas.getContext('2d');
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+  var w, h, cx, cy, maxR;
+
+  function resize() {
+    var rect = canvas.parentElement.getBoundingClientRect();
+    w = rect.width; h = rect.height;
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cx = w / 2; cy = h * 0.56;
+    maxR = Math.max(w, h) * 0.75;
+  }
+
+  function rippleColor() {
+    return getComputedStyle(document.documentElement).getPropertyValue('--ripple').trim() || 'rgba(0,0,0,0.2)';
+  }
+
+  var RING_COUNT = 5;
+  var PERIOD = 9000; // ms for one ring to travel out
+
+  function draw(now) {
+    ctx.clearRect(0, 0, w, h);
+    var col = rippleColor();
+    for (var i = 0; i < RING_COUNT; i++) {
+      var t = ((now + i * (PERIOD / RING_COUNT)) % PERIOD) / PERIOD;
+      var r = 24 + t * maxR;
+      var alpha = (1 - t) * 0.55;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.strokeStyle = col;
+      ctx.globalAlpha = alpha;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  function loop(now) {
+    draw(now);
+    requestAnimationFrame(loop);
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+
+  if (reduced) {
+    // static rings, no animation
+    draw(PERIOD * 0.35);
+  } else {
+    requestAnimationFrame(loop);
+  }
+})();
+</script>
+</body>
+</html>

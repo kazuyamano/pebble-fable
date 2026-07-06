@@ -1,0 +1,866 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="pebble（ペブル）— 大阪・天満橋、大川のほとりに佇む10席のレストラン。安藤忠雄建築の5階で、ワインと現代イタリアンのコースを。日々の情報はInstagram @pebble_wine_osaka にて。">
+</head>
+<body>
+<title>pebble — 大阪・天満橋 ワインと現代イタリアン</title>
+<style>
+  :root {
+    --paper: #D8D5D0;
+    --panel: #E3E1DC;
+    --ink: #24221D;
+    --stone: #6C6A64;
+    --rust: #6E4832;
+    --line: rgba(36, 34, 29, 0.18);
+    --ripple: rgba(36, 34, 29, 0.22);
+    --bar: rgba(216, 213, 208, 0.82);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #1B1A18;
+      --panel: #232220;
+      --ink: #E4E1DA;
+      --stone: #96938B;
+      --rust: #C68E6B;
+      --line: rgba(228, 225, 218, 0.16);
+      --ripple: rgba(228, 225, 218, 0.20);
+      --bar: rgba(27, 26, 24, 0.82);
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #1B1A18;
+    --panel: #232220;
+    --ink: #E4E1DA;
+    --stone: #96938B;
+    --rust: #C68E6B;
+    --line: rgba(228, 225, 218, 0.16);
+    --ripple: rgba(228, 225, 218, 0.20);
+    --bar: rgba(27, 26, 24, 0.82);
+  }
+  :root[data-theme="light"] {
+    --paper: #D8D5D0;
+    --panel: #E3E1DC;
+    --ink: #24221D;
+    --stone: #6C6A64;
+    --rust: #6E4832;
+    --line: rgba(36, 34, 29, 0.18);
+    --ripple: rgba(36, 34, 29, 0.22);
+    --bar: rgba(216, 213, 208, 0.82);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "Times New Roman", serif;
+    font-size: 16px;
+    line-height: 2;
+    letter-spacing: 0.06em;
+    -webkit-font-smoothing: antialiased;
+  }
+  /* béton brut: fine speckle over the whole page */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.35;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.35 0 0 0 0 0.34 0 0 0 0 0.32 0 0 0 0.10 0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  body > * { position: relative; z-index: 1; }
+
+  .gothic {
+    font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "YuGothic", "Noto Sans JP", sans-serif;
+  }
+  .brand {
+    font-family: "Futura", "Avenir Next", "Century Gothic", "Jost", "Hiragino Kaku Gothic ProN", sans-serif;
+    text-transform: lowercase;
+  }
+
+  a { color: inherit; }
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--rust);
+    outline-offset: 3px;
+  }
+
+  /* ---------- sticky bar ---------- */
+  .bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 10px 20px;
+    background: var(--bar);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+    transform: translateY(-110%);
+    transition: transform 0.35s ease;
+  }
+  .bar.on { transform: translateY(0); }
+  .bar .mark {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    font-size: 16px;
+    letter-spacing: 0.3em;
+  }
+  .bar .mark svg { width: 26px; height: 26px; }
+  .bar .right { display: flex; align-items: center; gap: 22px; }
+  .bar .maplink {
+    text-decoration: none;
+    font-size: 12.5px;
+    letter-spacing: 0.2em;
+    color: var(--ink);
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 2px;
+    white-space: nowrap;
+  }
+  .bar .maplink:hover { color: var(--rust); border-color: var(--rust); }
+  .bar .cta {
+    display: inline-block;
+    padding: 9px 26px;
+    background: var(--rust);
+    color: var(--paper);
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    text-decoration: none;
+    font-size: 12.5px;
+    letter-spacing: 0.26em;
+    text-indent: 0.26em;
+    transition: opacity 0.2s ease;
+  }
+  .bar .cta:hover { opacity: 0.85; }
+
+  /* ---------- hero ---------- */
+  .hero {
+    position: relative;
+    min-height: 94vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 48px 24px;
+    overflow: hidden;
+  }
+  .hero canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .hero > .inner { position: relative; }
+  .pebbles { width: 56px; height: 56px; margin: 0 auto 30px; display: block; color: var(--ink); opacity: 0.92; }
+  .hero .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.42em;
+    text-indent: 0.42em;
+    color: var(--stone);
+    text-transform: uppercase;
+    margin: 0 0 26px;
+  }
+  .wordmark {
+    font-size: clamp(48px, 9.5vw, 92px);
+    font-weight: 400;
+    letter-spacing: 0.38em;
+    text-indent: 0.38em;
+    line-height: 1.1;
+    margin: 0;
+    text-wrap: balance;
+  }
+  .hero .tagline {
+    margin: 38px 0 0;
+    font-size: 17px;
+    letter-spacing: 0.22em;
+    text-indent: 0.22em;
+  }
+  .hero .sub {
+    margin: 14px 0 0;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    color: var(--stone);
+  }
+  /* phrase-level wrapping: if the sub copy must break, it breaks at the comma */
+  .hero .sub .nb { display: inline-block; }
+  .hero .foot {
+    position: absolute;
+    bottom: 26px;
+    left: 0; right: 0;
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 0.26em;
+    text-indent: 0.26em;
+    color: var(--stone);
+  }
+  .hero .foot a { text-decoration: none; border-bottom: 1px solid var(--line); padding-bottom: 3px; }
+  .hero .foot a:hover { color: var(--rust); border-color: var(--rust); }
+  .hero .foot .sep { margin: 0 14px; opacity: 0.6; }
+  @media (max-width: 620px) {
+    .hero .sub { font-size: 12px; letter-spacing: 0.1em; line-height: 1.9; }
+  }
+
+  /* ---------- sections ---------- */
+  .section {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 100px 28px 0;
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 0 28px;
+  }
+  .section:last-of-type { padding-bottom: 120px; }
+
+  .vlabel {
+    writing-mode: vertical-rl;
+    font-size: 12px;
+    letter-spacing: 0.5em;
+    color: var(--stone);
+    border-right: 1px solid var(--line);
+    padding-right: 16px;
+    height: fit-content;
+    min-height: 120px;
+    position: sticky;
+    top: 88px;
+  }
+
+  .section h2 {
+    font-size: 24px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    margin: 0 0 32px;
+    text-wrap: balance;
+  }
+  .section p { max-width: 36em; margin: 0 0 1.6em; }
+  .section .en-note {
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin: 0 0 10px;
+  }
+  .quiet { color: var(--stone); font-size: 14px; }
+  .center { text-align: center; max-width: none !important; }
+
+  /* ---------- figures ---------- */
+  figure { margin: 40px 0; }
+  figure img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  figure figcaption {
+    font-size: 11.5px;
+    letter-spacing: 0.22em;
+    color: var(--stone);
+    margin-top: 12px;
+  }
+  .ph { background: var(--panel); overflow: hidden; }
+  .ph-tall { aspect-ratio: 4 / 5; }
+  .ph-wide { aspect-ratio: 3 / 2; }
+  .ph-duo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .ph-duo .ph { aspect-ratio: 4 / 3; }
+  .ph-duo.tall .ph { aspect-ratio: 3 / 4; }
+  .fig-ctr { width: 82%; margin-inline: auto; }
+  @media (min-width: 900px) {
+    .bleed { margin-inline: -48px; }
+    /* .ig-grid's own margin shorthand comes later in the cascade and would
+       reset margin-inline to 0 — this higher-specificity rule keeps the bleed */
+    .ig-grid.bleed { margin-inline: -48px; }
+  }
+
+  /* ---------- courses ---------- */
+  .courses { border-top: 1px solid var(--line); margin-top: 8px; }
+  .courses .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 24px;
+    padding: 20px 4px;
+    border-bottom: 1px solid var(--line);
+  }
+  .courses .name { letter-spacing: 0.18em; }
+  .courses .name small {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-top: 2px;
+  }
+  .courses .price {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+  .fineprint { font-size: 12px; color: var(--stone); margin-top: 14px; }
+
+  /* ---------- instagram ---------- */
+  .ig-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 36px 0 28px;
+  }
+  .ig-grid a {
+    display: block;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: var(--panel);
+  }
+  .ig-grid img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease, opacity 0.3s ease;
+  }
+  .ig-grid a:hover img { transform: scale(1.04); opacity: 0.9; }
+
+  .ig-roles {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin: 28px 0;
+    border: 1px solid var(--line);
+    background: var(--panel);
+    padding: 30px 32px;
+  }
+  .ig-roles .role h3 {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    color: var(--stone);
+    margin: 0 0 10px;
+  }
+  .ig-roles .role ul {
+    margin: 0; padding: 0;
+    list-style: none;
+    font-size: 13.5px;
+    line-height: 2.1;
+  }
+  .ig-roles .role li::before { content: "── "; color: var(--stone); }
+
+  .btn {
+    display: inline-block;
+    padding: 14px 36px;
+    border: 1px solid var(--ink);
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 0.3em;
+    text-indent: 0.3em;
+    transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  }
+  .btn:hover { background: var(--ink); color: var(--paper); }
+
+  /* ---------- info ---------- */
+  .info-table { border-top: 1px solid var(--line); width: 100%; border-collapse: collapse; }
+  .info-table th, .info-table td {
+    border-bottom: 1px solid var(--line);
+    padding: 16px 8px;
+    text-align: left;
+    vertical-align: top;
+    font-weight: 400;
+    font-size: 14.5px;
+  }
+  .info-table th {
+    width: 8.5em;
+    color: var(--stone);
+    letter-spacing: 0.2em;
+    white-space: nowrap;
+  }
+  .info-table td { font-variant-numeric: tabular-nums; }
+
+  /* ---------- reservation (section + modal shared) ---------- */
+  .reserve-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin: 30px 0 8px;
+  }
+  .rsv {
+    display: block;
+    text-decoration: none;
+    border: 1px solid var(--line);
+    background: var(--panel);
+    padding: 22px 18px 20px;
+    text-align: center;
+    transition: border-color 0.25s ease;
+  }
+  .rsv:hover { border-color: var(--rust); }
+  .rsv .site {
+    display: block;
+    font-size: 14.5px;
+    letter-spacing: 0.18em;
+    margin-bottom: 6px;
+  }
+  .rsv .note {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--stone);
+  }
+  .tel-block {
+    margin-top: 44px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    max-width: none !important;
+  }
+  .tel-block .label {
+    display: block;
+    font-size: 11.5px;
+    letter-spacing: 0.24em;
+    color: var(--stone);
+    margin-bottom: 10px;
+  }
+  .tel-block .tel { font-size: 24px; }
+  .tel {
+    font-size: 20px;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    font-variant-numeric: tabular-nums;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 2px;
+  }
+  .tel:hover { color: var(--rust); border-color: var(--rust); }
+
+  dialog.rsv-modal {
+    width: min(92vw, 520px);
+    border: 1px solid var(--line);
+    background: var(--paper);
+    color: var(--ink);
+    padding: 40px 36px 36px;
+    margin: auto;
+  }
+  dialog.rsv-modal::backdrop {
+    background: rgba(20, 19, 17, 0.45);
+    -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px);
+  }
+  .rsv-modal h2 {
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-indent: 0.3em;
+    text-align: center;
+    margin: 0 0 26px;
+  }
+  .rsv-modal .sites {
+    display: grid;
+    gap: 12px;
+  }
+  .rsv-modal .rsv { padding: 16px 18px 14px; }
+  .rsv-modal .close {
+    position: absolute;
+    top: 12px; right: 12px;
+    width: 40px; height: 40px;
+    border: none;
+    background: transparent;
+    color: var(--stone);
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .rsv-modal .close:hover { color: var(--ink); }
+
+  /* ---------- footer ---------- */
+  footer {
+    border-top: 1px solid var(--line);
+    margin-top: 120px;
+    padding: 56px 28px 64px;
+    text-align: center;
+  }
+  footer .pebbles { width: 42px; height: 42px; margin-bottom: 20px; }
+  footer .mark {
+    font-size: 19px;
+    letter-spacing: 0.38em;
+    text-indent: 0.38em;
+    margin: 0 0 20px;
+  }
+  footer nav {
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+  }
+  footer nav a { text-decoration: none; color: var(--stone); }
+  footer nav a:hover { color: var(--rust); }
+  footer .copy { margin-top: 28px; font-size: 11px; color: var(--stone); letter-spacing: 0.2em; }
+
+  @media (max-width: 620px) {
+    .section { grid-template-columns: 1fr; gap: 0; padding-top: 76px; }
+    .vlabel {
+      writing-mode: horizontal-tb;
+      position: static;
+      border-right: none;
+      border-bottom: 1px solid var(--line);
+      padding: 0 0 10px;
+      margin-bottom: 26px;
+      min-height: 0;
+    }
+    .ig-roles { grid-template-columns: 1fr; }
+    .reserve-grid { grid-template-columns: 1fr; }
+    .fig-ctr { width: 100%; }
+    .ph-duo, .ph-duo.tall { grid-template-columns: 1fr; }
+    .hero .foot .sep { display: block; visibility: hidden; height: 4px; }
+    .bar { padding: 10px 14px; }
+    .bar .right { gap: 14px; }
+    .bar .cta { padding: 9px 18px; }
+    .bar .mark .wm { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bar, .btn, .ig-grid img, .rsv { transition: none; }
+  }
+</style>
+
+<!-- brand mark: the three pebbles, ellipse-fitted from the logo (moment analysis of icon-pebble.jpg) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="pebble-mark">
+      <ellipse cx="34.2" cy="35.2" rx="15.5" ry="17.3"/>
+      <ellipse cx="69.0" cy="43.7" rx="18.1" ry="9.5" transform="rotate(12.3 69 43.7)"/>
+      <ellipse cx="43.2" cy="68.7" rx="22.0" ry="14.1" transform="rotate(-33.7 43.2 68.7)"/>
+    </g>
+  </defs>
+</svg>
+
+<nav class="bar gothic" id="bar" aria-label="ヘッダー">
+  <a class="mark brand" href="#top">
+    <svg viewBox="0 0 100 100" fill="currentColor" aria-hidden="true"><use href="#pebble-mark"/></svg>
+    <span class="wm">pebble</span>
+  </a>
+  <div class="right">
+    <a class="maplink" href="https://www.instagram.com/pebble_wine_osaka/" target="_blank" rel="noopener">Instagram</a>
+    <a class="maplink" href="https://maps.app.goo.gl/BENYgtLQY3g4eQJY9" target="_blank" rel="noopener">Map</a>
+    <button class="cta" type="button" data-reserve>ご予約</button>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <canvas id="ripples" aria-hidden="true"></canvas>
+  <div class="inner">
+    <svg class="pebbles" viewBox="0 0 100 100" fill="currentColor" aria-hidden="true"><use href="#pebble-mark"/></svg>
+    <p class="eyebrow gothic">Osaka · Temmabashi</p>
+    <h1 class="wordmark brand">pebble</h1>
+    <p class="tagline">大川のほとり、十席のレストラン。</p>
+    <p class="sub gothic"><span class="nb">安藤忠雄建築の五階に、</span><span class="nb">ワインと現代イタリアンの一皿を。</span></p>
+  </div>
+  <p class="foot gothic">
+    <a href="#reserve" data-reserve>ご予約はこちら</a>
+    <span class="sep">／</span>
+    日々の更新は <a href="https://www.instagram.com/pebble_wine_osaka/" target="_blank" rel="noopener">Instagram</a> で
+  </p>
+</header>
+
+<section class="section" id="concept">
+  <span class="vlabel gothic" aria-hidden="true">はじまり</span>
+  <div>
+    <p class="en-note gothic">Concept</p>
+    <h2>小さな石ころ、と名づけた店。</h2>
+    <p>pebble ── 水辺の小石。2024年7月、天満橋のほとりに小さなワインバーとして生まれ、2025年、シェフ・夏川を迎えてレストランになりました。</p>
+    <p>場所は、安藤忠雄氏設計の建築の五階。かつて作家・堺屋太一氏が暮らした住まいの記憶を残す空間から、窓の外にはゆっくりと大川が流れます。</p>
+    <figure class="fig-ctr">
+      <div class="ph ph-tall"><img src="assets/img/space-interior.jpg" alt="コンクリート打ち放しの壁に掛かる錆びた鉄の看板と真鍮のランプ" loading="lazy"></div>
+      <figcaption class="gothic">エントランス ── 打ち放しの壁に、鉄と真鍮。</figcaption>
+    </figure>
+    <p>川に投げた小石の波紋のように、一皿とひと口のワインが、その日の記憶として静かに広がっていくこと。それがこの店の願いです。</p>
+  </div>
+</section>
+
+<section class="section" id="cuisine">
+  <span class="vlabel gothic" aria-hidden="true">料理</span>
+  <div>
+    <p class="en-note gothic">Cuisine</p>
+    <h2>ワインに寄り添う、現代のイタリアン。</h2>
+    <p>イタリアンを基調に、季節の食材を現代的な手法で仕立てるコース料理。皿の上にも、小石がひとつ。</p>
+    <figure class="bleed">
+      <div class="ph-duo">
+        <div class="ph"><img src="assets/img/cuisine-pebble.jpg" alt="黒い石皿に盛られたアミューズ。本物の小石とともに" loading="lazy"></div>
+        <div class="ph"><img src="assets/img/cuisine-kinmedai.jpg" alt="白い皿に金目鯛のポワレとサフランのソース" loading="lazy"></div>
+      </div>
+      <figcaption class="gothic">コースの一皿より</figcaption>
+    </figure>
+    <div class="courses">
+      <div class="row">
+        <span class="name">昼のコース<small class="gothic">Lunch Course</small></span>
+        <span class="price">¥8,800 〜</span>
+      </div>
+      <div class="row">
+        <span class="name">夜のコース<small class="gothic">Dinner Course</small></span>
+        <span class="price">¥10,800 〜 ¥19,800</span>
+      </div>
+    </div>
+    <p class="fineprint gothic">価格は税込・サービス料（7%）別。内容・価格は季節により変わります。最新のコースは Instagram にてお知らせしています。</p>
+  </div>
+</section>
+
+<section class="section" id="wine">
+  <span class="vlabel gothic" aria-hidden="true">ワイン</span>
+  <div>
+    <p class="en-note gothic">Wine</p>
+    <h2>国境のない、一杯を。</h2>
+    <p>オーナーソムリエが、国やスタイルにとらわれず世界の造り手から選ぶワイン。コースに合わせたペアリングで、皿ごとの対話をお楽しみください。</p>
+    <figure class="fig-ctr">
+      <div class="ph ph-wide"><img src="assets/img/wine-barolo.jpg" alt="夜景を背にしたバローロのボトルとグラス、かたわらに小石" loading="lazy"></div>
+      <figcaption class="gothic">夜、大川の灯りとともに。</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="section" id="space">
+  <span class="vlabel gothic" aria-hidden="true">空間</span>
+  <div>
+    <p class="en-note gothic">Space</p>
+    <h2>カウンター六席、個室四席。</h2>
+    <p>打ち放しの静けさの中に、カウンター六席と、四名様までの個室をひとつ。大川を望む窓辺で、料理人とソムリエの手元を眺めながらの時間をお過ごしいただけます。</p>
+    <figure class="bleed">
+      <div class="ph-duo tall">
+        <div class="ph"><img src="assets/img/building.jpg" alt="一枚板のカウンター越しに、夜の大川と街の灯り" loading="lazy"></div>
+        <div class="ph"><img src="assets/img/space-private-room.jpg" alt="円卓の個室。窓の外に坪庭の灯り" loading="lazy"></div>
+      </div>
+      <figcaption class="gothic">カウンター ／ 個室</figcaption>
+    </figure>
+    <p class="quiet">全席ご予約制です。おひとり様も歓迎いたします。</p>
+  </div>
+</section>
+
+<section class="section" id="instagram">
+  <span class="vlabel gothic" aria-hidden="true">日々のこと</span>
+  <div>
+    <p class="en-note gothic">Instagram</p>
+    <h2>日々のことは、Instagramで。</h2>
+    <p>本日の一皿、抜いたばかりのコルク、窓の外をゆく季節。店の「いま」は、Instagramでお届けしています。ご来店の前に、のぞいてみてください。</p>
+    <div class="ig-grid bleed">
+      <a href="https://www.instagram.com/pebble_wine_osaka/" target="_blank" rel="noopener"><img src="assets/img/ig-01.jpg" alt="Instagramの投稿より：石皿のアミューズ" loading="lazy"></a>
+      <a href="https://www.instagram.com/pebble_wine_osaka/" target="_blank" rel="noopener"><img src="assets/img/ig-02.jpg" alt="Instagramの投稿より" loading="lazy"></a>
+      <a href="https://www.instagram.com/pebble_wine_osaka/" target="_blank" rel="noopener"><img src="assets/img/ig-03.jpg" alt="Instagramの投稿より" loading="lazy"></a>
+      <a href="https://www.instagram.com/pebble_wine_osaka/" target="_blank" rel="noopener"><img src="assets/img/ig-04.jpg" alt="Instagramの投稿より：個室の円卓" loading="lazy"></a>
+      <a href="https://www.instagram.com/pebble_wine_osaka/" target="_blank" rel="noopener"><img src="assets/img/ig-05.jpg" alt="Instagramの投稿より" loading="lazy"></a>
+      <a href="https://www.instagram.com/pebble_wine_osaka/" target="_blank" rel="noopener"><img src="assets/img/ig-06.jpg" alt="Instagramの投稿より" loading="lazy"></a>
+    </div>
+    <div class="ig-roles gothic">
+      <div class="role">
+        <h3>Instagramでお知らせ</h3>
+        <ul>
+          <li>本日のお皿・新しいコース</li>
+          <li>入荷したワイン</li>
+          <li>臨時休業・空席のご案内</li>
+        </ul>
+      </div>
+    </div>
+    <p class="center"><a class="btn" href="https://www.instagram.com/pebble_wine_osaka/" target="_blank" rel="noopener">@pebble_wine_osaka</a></p>
+  </div>
+</section>
+
+<section class="section" id="info">
+  <span class="vlabel gothic" aria-hidden="true">ご案内</span>
+  <div>
+    <p class="en-note gothic">Information</p>
+    <h2>営業時間・アクセス</h2>
+    <table class="info-table">
+      <tbody>
+        <tr>
+          <th scope="row">営業時間</th>
+          <td>月・火・木・土・祝　12:00–14:30 ／ 18:00–22:00<br>水・金　18:00–22:00</td>
+        </tr>
+        <tr>
+          <th scope="row">定休日</th>
+          <td>日曜日</td>
+        </tr>
+        <tr>
+          <th scope="row">住所</th>
+          <td>〒530-0043　大阪府大阪市北区天満3-1-2　TSビル 5F<br>
+          <a href="https://maps.app.goo.gl/BENYgtLQY3g4eQJY9" target="_blank" rel="noopener" class="quiet gothic">Google マップで開く →</a></td>
+        </tr>
+        <tr>
+          <th scope="row">アクセス</th>
+          <td>Osaka Metro 谷町線・京阪本線「天満橋」駅より徒歩約3分</td>
+        </tr>
+        <tr>
+          <th scope="row">お電話</th>
+          <td>06-6356-0141</td>
+        </tr>
+        <tr>
+          <th scope="row">お支払い</th>
+          <td>各種クレジットカード（VISA / Master / JCB / AMEX / Diners）</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="section" id="reserve">
+  <span class="vlabel gothic" aria-hidden="true">ご予約</span>
+  <div>
+    <p class="en-note gothic">Reservation</p>
+    <h2>ご予約をお待ちしています。</h2>
+    <p>十席の小さな店のため、ご予約のうえお越しください。以下の予約サイト、またはお電話にて承ります。</p>
+    <div class="reserve-grid gothic">
+      <a class="rsv" href="https://www.tablecheck.com/ja/pebble" target="_blank" rel="noopener">
+        <span class="site">TableCheck</span>
+        <span class="note">オンライン予約</span>
+      </a>
+      <a class="rsv" href="https://tabelog.com/osaka/A2701/A270104/27143927/" target="_blank" rel="noopener">
+        <span class="site">食べログ</span>
+        <span class="note">オンライン予約</span>
+      </a>
+      <a class="rsv" href="https://restaurant.ikyu.com/145344/?ikgo=2" target="_blank" rel="noopener">
+        <span class="site">一休.com</span>
+        <span class="note">オンライン予約</span>
+      </a>
+    </div>
+    <div class="tel-block gothic">
+      <span class="label">お電話でのご予約・当日のご相談・その他のお問い合わせ</span>
+      <a class="tel" href="tel:0663560141">06-6356-0141</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <svg class="pebbles" viewBox="0 0 100 100" fill="currentColor" aria-hidden="true"><use href="#pebble-mark"/></svg>
+  <p class="mark brand">pebble</p>
+  <nav class="gothic">
+    <a href="#concept">Concept</a>
+    <a href="#cuisine">Cuisine</a>
+    <a href="#wine">Wine</a>
+    <a href="#instagram">Instagram</a>
+    <a href="#info">Information</a>
+    <a href="#reserve">Reservation</a>
+  </nav>
+  <p class="copy gothic">© pebble, Osaka</p>
+</footer>
+
+<dialog class="rsv-modal gothic" id="rsv-modal" aria-labelledby="rsv-title">
+  <button class="close" type="button" data-close aria-label="閉じる">×</button>
+  <h2 id="rsv-title">ご予約</h2>
+  <div class="sites">
+    <a class="rsv" href="https://www.tablecheck.com/ja/pebble" target="_blank" rel="noopener">
+      <span class="site">TableCheck</span>
+      <span class="note">オンライン予約</span>
+    </a>
+    <a class="rsv" href="https://tabelog.com/osaka/A2701/A270104/27143927/" target="_blank" rel="noopener">
+      <span class="site">食べログ</span>
+      <span class="note">オンライン予約</span>
+    </a>
+    <a class="rsv" href="https://restaurant.ikyu.com/145344/?ikgo=2" target="_blank" rel="noopener">
+      <span class="site">一休.com</span>
+      <span class="note">オンライン予約</span>
+    </a>
+  </div>
+  <div class="tel-block">
+    <span class="label">お電話でのご予約・当日のご相談・その他のお問い合わせ</span>
+    <a class="tel" href="tel:0663560141">06-6356-0141</a>
+  </div>
+</dialog>
+
+<script>
+(function () {
+  /* ---- asymmetric ripples ---- */
+  var canvas = document.getElementById('ripples');
+  var ctx = canvas.getContext('2d');
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+  var w, h, cx, cy, maxR;
+
+  function resize() {
+    var rect = canvas.parentElement.getBoundingClientRect();
+    w = rect.width; h = rect.height;
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cx = w * 0.68; cy = h * 0.34;
+    maxR = Math.hypot(Math.max(cx, w - cx), Math.max(cy, h - cy)) * 1.05;
+  }
+
+  function rippleColor() {
+    return getComputedStyle(document.documentElement).getPropertyValue('--ripple').trim() || 'rgba(0,0,0,0.2)';
+  }
+
+  var RING_COUNT = 5;
+  var PERIOD = 10000;
+
+  function draw(now) {
+    ctx.clearRect(0, 0, w, h);
+    var col = rippleColor();
+    for (var i = 0; i < RING_COUNT; i++) {
+      var t = ((now + i * (PERIOD / RING_COUNT)) % PERIOD) / PERIOD;
+      var r = 20 + t * maxR;
+      var alpha = (1 - t) * 0.5;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.strokeStyle = col;
+      ctx.globalAlpha = alpha;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  function loop(now) {
+    draw(now);
+    requestAnimationFrame(loop);
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+
+  if (reduced) {
+    draw(PERIOD * 0.35);
+  } else {
+    requestAnimationFrame(loop);
+  }
+
+  /* ---- sticky bar: appears once the hero is scrolled past ---- */
+  var bar = document.getElementById('bar');
+  var hero = document.querySelector('.hero');
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      bar.classList.toggle('on', !entries[0].isIntersecting);
+    }, { threshold: 0.06 }).observe(hero);
+  } else {
+    bar.classList.add('on');
+  }
+
+  /* ---- reservation modal ---- */
+  var modal = document.getElementById('rsv-modal');
+  if (modal && typeof modal.showModal === 'function') {
+    document.querySelectorAll('[data-reserve]').forEach(function (el) {
+      el.addEventListener('click', function (e) {
+        e.preventDefault();
+        modal.showModal();
+      });
+    });
+    modal.querySelector('[data-close]').addEventListener('click', function () {
+      modal.close();
+    });
+    /* click on the backdrop closes */
+    modal.addEventListener('click', function (e) {
+      if (e.target === modal) modal.close();
+    });
+  }
+  /* without <dialog> support, [data-reserve] anchors fall back to #reserve */
+})();
+</script>
+
+</body>
+</html>
