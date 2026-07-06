@@ -279,12 +279,6 @@
   .ph-duo .ph { aspect-ratio: 4 / 3; }
   .ph-duo.tall .ph { aspect-ratio: 3 / 4; }
   .fig-ctr { width: 82%; margin-inline: auto; }
-  @media (min-width: 900px) {
-    .bleed { margin-inline: -48px; }
-    /* .ig-grid's own margin shorthand comes later in the cascade and would
-       reset margin-inline to 0 — this higher-specificity rule keeps the bleed */
-    .ig-grid.bleed { margin-inline: -48px; }
-  }
 
   /* ---------- courses ---------- */
   .courses { border-top: 1px solid var(--line); margin-top: 8px; }
@@ -594,7 +588,7 @@
     <p class="en-note gothic">Cuisine</p>
     <h2>ワインに寄り添う、現代のイタリアン。</h2>
     <p>イタリアンを基調に、季節の食材を現代的な手法で仕立てるコース料理。皿の上にも、小石がひとつ。</p>
-    <figure class="bleed">
+    <figure>
       <div class="ph-duo">
         <div class="ph"><img src="assets/img/cuisine-pebble.jpg" alt="黒い石皿に盛られたアミューズ。本物の小石とともに" loading="lazy"></div>
         <div class="ph"><img src="assets/img/cuisine-kinmedai.jpg" alt="白い皿に金目鯛のポワレとサフランのソース" loading="lazy"></div>
@@ -634,7 +628,7 @@
     <p class="en-note gothic">Space</p>
     <h2>カウンター六席、個室四席。</h2>
     <p>打ち放しの静けさの中に、カウンター六席と、四名様までの個室をひとつ。大川を望む窓辺で、料理人とソムリエの手元を眺めながらの時間をお過ごしいただけます。</p>
-    <figure class="bleed">
+    <figure>
       <div class="ph-duo tall">
         <div class="ph"><img src="assets/img/building.jpg" alt="一枚板のカウンター越しに、夜の大川と街の灯り" loading="lazy"></div>
         <div class="ph"><img src="assets/img/space-private-room.jpg" alt="円卓の個室。窓の外に坪庭の灯り" loading="lazy"></div>
@@ -651,7 +645,7 @@
     <p class="en-note gothic">Instagram</p>
     <h2>日々のことは、Instagramで。</h2>
     <p>本日の一皿、抜いたばかりのコルク、窓の外をゆく季節。店の「いま」は、Instagramでお届けしています。ご来店の前に、のぞいてみてください。</p>
-    <div class="ig-grid bleed">
+    <div class="ig-grid">
       <a href="https://www.instagram.com/pebble_wine_osaka/" target="_blank" rel="noopener"><img src="assets/img/ig-01.jpg" alt="Instagramの投稿より：石皿のアミューズ" loading="lazy"></a>
       <a href="https://www.instagram.com/pebble_wine_osaka/" target="_blank" rel="noopener"><img src="assets/img/ig-02.jpg" alt="Instagramの投稿より" loading="lazy"></a>
       <a href="https://www.instagram.com/pebble_wine_osaka/" target="_blank" rel="noopener"><img src="assets/img/ig-03.jpg" alt="Instagramの投稿より" loading="lazy"></a>
