@@ -167,6 +167,16 @@
   }
   .hero > .inner { position: relative; }
   .pebbles { width: 56px; height: 56px; margin: 0 auto 30px; display: block; color: var(--ink); opacity: 0.92; }
+  /* hero mark follows the storefront sign: white stones knocked out of a
+     portrait corten plate */
+  .hero .pebbles {
+    width: 66px;
+    height: 86px;
+    padding: 25px 15px;
+    background: var(--rust);
+    color: #EDEBE6;
+    opacity: 1;
+  }
   .hero .eyebrow {
     font-size: 11px;
     letter-spacing: 0.42em;
@@ -447,10 +457,10 @@
     padding: 40px 36px 36px;
     margin: auto;
   }
+  /* no backdrop-filter here: blurring ::backdrop makes iOS Safari composite
+     the backdrop above the dialog itself, leaving the modal invisible */
   dialog.rsv-modal::backdrop {
-    background: rgba(20, 19, 17, 0.45);
-    -webkit-backdrop-filter: blur(3px);
-    backdrop-filter: blur(3px);
+    background: rgba(20, 19, 17, 0.55);
   }
   .rsv-modal h2 {
     font-size: 18px;
