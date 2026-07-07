@@ -8,12 +8,13 @@
 yamano からの相談「round=0 は意図的か。小石モチーフに合わせ丸みをつけるべきか」を受けた比較用スタディ。本線は round=0 のまま。
 
 - **A案 ── 全体に 4px**: ボタン・モーダル・写真・IGグリッド・カード全部に一律 4px の角丸
+  - 実機確認用デプロイ: https://kazuyamano.github.io/pebble-fable/round-a/ （`docs/round-a/`）
   - プレビュー: https://claude.ai/code/artifact/f77afb40-d179-4a3d-83c4-bd9d8d4c7f12
   - スナップショット: `versions/round-a/index.html`
-- **B案 ── ボタン石型**: 構造は直角のまま、ボタン類（追従バーCTA・IGボタン・予約サイトカード）だけを非対称な有機角丸＝小石のシルエットに振り切る
-  - プレビュー: https://claude.ai/code/artifact/f4ff7f32-c945-4064-89b9-c1f0124e4cb2
+- **B案 ── ボタン石型**: ボタン類だけを非対称な有機角丸＝小石のシルエットに振り切る → **不採用**（yamano判断）
   - スナップショット: `versions/round-b/index.html`
 - 設計側の推奨は現状維持（円=水と石・動くもの／直角=建築・静的な構造、という役割分担。円は波紋とロゴが既に担う）
+- 注: スタディ版はclaude.aiビューアのiframeで`<dialog>`のトップレイヤーが機能しないため、モーダルのみクラス切替式オーバーレイに差し替えてある（本番は`<dialog>`のまま）
 
 ## v7 — 2026-07-06 Instagram セクションのコピー刷新
 
