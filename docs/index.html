@@ -101,19 +101,22 @@
     margin: 0 auto 13.6%;
     aspect-ratio: 492 / 491;
     background: transparent no-repeat center / contain;
-    background-image: var(--stones);
+    background-image: url("assets/img/logo-pebbles.png");
   }
+  /* scale keeps the layout box, so nothing around the lockup moves —
+     the 10% shaved off simply becomes breathing room */
+  .lockup-hero, .lockup-footer { transform: scale(0.9); transform-origin: center; }
   .lockup-hero { width: clamp(220px, 38vw, 380px); }
   .lockup-footer { width: 96px; }
   /* the name: lettering cut from the official logo art (custom logotype —
-     no stock face matches its protruding e-bar). Baked in the theme ink
-     color per theme, switched through --wm so data-theme overrides work. */
+     no stock face matches its protruding e-bar). White in both themes,
+     same as the stones — the 白抜き treatment adopted 2026-07-07. */
   .wm-img {
     display: block;
     width: 100%;
     aspect-ratio: 2120 / 509;
     background: transparent no-repeat center / contain;
-    background-image: var(--wm);
+    background-image: url("assets/img/pebble-wordmark-white.png");
   }
   .wm-text {
     position: absolute;
