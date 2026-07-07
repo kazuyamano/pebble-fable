@@ -18,6 +18,7 @@
     --ripple: rgba(36, 34, 29, 0.22);
     --bar: rgba(216, 213, 208, 0.82);
     --wm: url("assets/img/pebble-wordmark-ink.png");
+    --stones: url("assets/img/logo-pebbles-ink.png");
   }
   @media (prefers-color-scheme: dark) {
     :root {
@@ -30,6 +31,7 @@
       --ripple: rgba(228, 225, 218, 0.20);
       --bar: rgba(27, 26, 24, 0.82);
     --wm: url("assets/img/pebble-wordmark-paper.png");
+    --stones: url("assets/img/logo-pebbles-paper.png");
     }
   }
   :root[data-theme="dark"] {
@@ -42,6 +44,7 @@
     --ripple: rgba(228, 225, 218, 0.20);
     --bar: rgba(27, 26, 24, 0.82);
     --wm: url("assets/img/pebble-wordmark-paper.png");
+    --stones: url("assets/img/logo-pebbles-paper.png");
   }
   :root[data-theme="light"] {
     --paper: #D8D5D0;
@@ -53,6 +56,7 @@
     --ripple: rgba(36, 34, 29, 0.22);
     --bar: rgba(216, 213, 208, 0.82);
     --wm: url("assets/img/pebble-wordmark-ink.png");
+    --stones: url("assets/img/logo-pebbles-ink.png");
   }
 
   * { box-sizing: border-box; }
@@ -91,7 +95,14 @@
      stones = 0.679 x name width, stones-to-name gap = 0.565 x name height
      (= 13.6% of name width). Only the width per placement may differ. */
   .lockup { display: block; margin-inline: auto; }
-  .lockup .lk-stones { display: block; width: 67.9%; margin: 0 auto 13.6%; }
+  .lockup .lk-stones {
+    display: block;
+    width: 67.9%;
+    margin: 0 auto 13.6%;
+    aspect-ratio: 492 / 491;
+    background: transparent no-repeat center / contain;
+    background-image: var(--stones);
+  }
   .lockup-hero { width: clamp(220px, 38vw, 380px); }
   .lockup-footer { width: 96px; }
   /* the name: lettering cut from the official logo art (custom logotype —
@@ -144,7 +155,12 @@
     font-size: 16px;
     letter-spacing: 0.3em;
   }
-  .bar .mark .pebbles-sm { width: 26px; height: 26px; display: block; }
+  .bar .mark .pebbles-sm {
+    width: 26px; height: 26px;
+    display: block;
+    background: transparent no-repeat center / contain;
+    background-image: var(--stones);
+  }
   .bar .right { display: flex; align-items: center; gap: 22px; }
   .bar .maplink {
     text-decoration: none;
@@ -569,7 +585,7 @@
 
 <nav class="bar gothic" id="bar" aria-label="ヘッダー">
   <a class="mark brand" href="#top" aria-label="pebble（トップへ）">
-    <img class="pebbles-sm" src="assets/img/logo-pebbles.png" alt="" aria-hidden="true">
+    <span class="pebbles-sm" aria-hidden="true"></span>
   </a>
   <div class="right">
     <a class="maplink" href="https://www.instagram.com/pebble_wine_osaka/" target="_blank" rel="noopener">Instagram</a>
@@ -582,7 +598,7 @@
   <canvas id="ripples" aria-hidden="true"></canvas>
   <div class="inner">
     <p class="eyebrow gothic">Osaka · Temmabashi</p>
-    <h1 class="wordmark brand"><span class="wm-text">pebble</span><span class="lockup lockup-hero" aria-hidden="true"><img class="lk-stones" src="assets/img/logo-pebbles.png" alt=""><span class="wm-img"></span></span></h1>
+    <h1 class="wordmark brand"><span class="wm-text">pebble</span><span class="lockup lockup-hero" aria-hidden="true"><span class="lk-stones"></span><span class="wm-img"></span></span></h1>
     <p class="tagline">大川のほとり、十席のレストラン。</p>
     <p class="sub gothic"><span class="nb">安藤忠雄建築の五階に、</span><span class="nb">ワインと現代イタリアンの一皿を。</span></p>
   </div>
@@ -758,7 +774,7 @@
 </section>
 
 <footer>
-  <p class="mark brand"><span class="wm-text">pebble</span><span class="lockup lockup-footer" aria-hidden="true"><img class="lk-stones" src="assets/img/logo-pebbles.png" alt=""><span class="wm-img"></span></span></p>
+  <p class="mark brand"><span class="wm-text">pebble</span><span class="lockup lockup-footer" aria-hidden="true"><span class="lk-stones"></span><span class="wm-img"></span></span></p>
   <nav class="gothic">
     <a href="#concept">Concept</a>
     <a href="#cuisine">Cuisine</a>
