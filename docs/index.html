@@ -167,14 +167,10 @@
   }
   .hero > .inner { position: relative; }
   .pebbles { width: 56px; height: 56px; margin: 0 auto 30px; display: block; color: var(--ink); opacity: 0.92; }
-  /* hero mark follows the storefront sign: white stones knocked out of a
-     portrait corten plate */
+  /* hero mark follows icon-pebble: white stones straight on the page,
+     no plate behind them */
   .hero .pebbles {
-    width: 66px;
-    height: 86px;
-    padding: 25px 15px;
-    background: var(--rust);
-    color: #EDEBE6;
+    color: #FFFFFF;
     opacity: 1;
   }
   .hero .eyebrow {
@@ -450,6 +446,13 @@
   .tel:hover { color: var(--rust); border-color: var(--rust); }
 
   dialog.rsv-modal {
+    /* pin to the viewport explicitly — iOS Safari otherwise lays the open
+       dialog out at the top of the document, off-screen when scrolled */
+    position: fixed;
+    inset: 0;
+    height: fit-content;
+    max-height: calc(100dvh - 48px);
+    overflow: auto;
     width: min(92vw, 520px);
     border: 1px solid var(--line);
     background: var(--paper);
