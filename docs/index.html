@@ -115,7 +115,7 @@
     font-size: 16px;
     letter-spacing: 0.3em;
   }
-  .bar .mark svg { width: 26px; height: 26px; }
+  .bar .mark .pebbles-sm { width: 26px; height: 26px; display: block; }
   .bar .right { display: flex; align-items: center; gap: 22px; }
   .bar .maplink {
     text-decoration: none;
@@ -166,13 +166,9 @@
     display: block;
   }
   .hero > .inner { position: relative; }
-  .pebbles { width: 56px; height: 56px; margin: 0 auto 30px; display: block; color: var(--ink); opacity: 0.92; }
-  /* hero mark follows icon-pebble: white stones straight on the page,
-     no plate behind them */
-  .hero .pebbles {
-    color: #FFFFFF;
-    opacity: 1;
-  }
+  /* brand mark everywhere: the stones cut straight from icon-pebble.jpg,
+     knocked out white with no plate behind them */
+  .pebbles { width: 56px; height: 56px; margin: 0 auto 30px; display: block; }
   .hero .eyebrow {
     font-size: 11px;
     letter-spacing: 0.42em;
@@ -544,20 +540,9 @@
   }
 </style>
 
-<!-- brand mark: the three pebbles, ellipse-fitted from the logo (moment analysis of icon-pebble.jpg) -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <g id="pebble-mark">
-      <ellipse cx="34.2" cy="35.2" rx="15.5" ry="17.3"/>
-      <ellipse cx="69.0" cy="43.7" rx="18.1" ry="9.5" transform="rotate(12.3 69 43.7)"/>
-      <ellipse cx="43.2" cy="68.7" rx="22.0" ry="14.1" transform="rotate(-33.7 43.2 68.7)"/>
-    </g>
-  </defs>
-</svg>
-
 <nav class="bar gothic" id="bar" aria-label="ヘッダー">
   <a class="mark brand" href="#top">
-    <svg viewBox="0 0 100 100" fill="currentColor" aria-hidden="true"><use href="#pebble-mark"/></svg>
+    <img class="pebbles-sm" src="assets/img/logo-pebbles.png" alt="" aria-hidden="true">
     <span class="wm">pebble</span>
   </a>
   <div class="right">
@@ -570,7 +555,7 @@
 <header class="hero" id="top">
   <canvas id="ripples" aria-hidden="true"></canvas>
   <div class="inner">
-    <svg class="pebbles" viewBox="0 0 100 100" fill="currentColor" aria-hidden="true"><use href="#pebble-mark"/></svg>
+    <img class="pebbles" src="assets/img/logo-pebbles.png" alt="" aria-hidden="true">
     <p class="eyebrow gothic">Osaka · Temmabashi</p>
     <h1 class="wordmark brand">pebble</h1>
     <p class="tagline">大川のほとり、十席のレストラン。</p>
@@ -748,7 +733,7 @@
 </section>
 
 <footer>
-  <svg class="pebbles" viewBox="0 0 100 100" fill="currentColor" aria-hidden="true"><use href="#pebble-mark"/></svg>
+  <img class="pebbles" src="assets/img/logo-pebbles.png" alt="" aria-hidden="true">
   <p class="mark brand">pebble</p>
   <nav class="gothic">
     <a href="#concept">Concept</a>
