@@ -162,7 +162,7 @@
     width: 26px; height: 26px;
     display: block;
     background: transparent no-repeat center / contain;
-    background-image: var(--stones);
+    background-image: url("assets/img/logo-pebbles.png");
   }
   .bar .right { display: flex; align-items: center; gap: 22px; }
   .bar .maplink {
@@ -271,7 +271,9 @@
     grid-template-columns: 64px 1fr;
     gap: 0 28px;
   }
-  .section:last-of-type { padding-bottom: 120px; }
+  /* keep the gap between the phone number and the footer intentional but
+     modest — 240px of void read as a rendering error */
+  .section:last-of-type { padding-bottom: 72px; }
 
   .vlabel {
     writing-mode: vertical-rl;
@@ -535,17 +537,19 @@
   /* ---------- footer ---------- */
   footer {
     border-top: 1px solid var(--line);
-    margin-top: 120px;
-    /* slightly less above the lockup than the 48px below it */
-    padding: 44px 28px 64px;
+    margin-top: 56px;
+    /* slightly more above the lockup than the 36px below it — the scaled
+       lockup adds ~9px of its own air on each side */
+    padding: 40px 28px 64px;
     text-align: center;
   }
   footer .mark {
     font-size: 19px;
     letter-spacing: 0.38em;
     text-indent: 0.38em;
-    /* generous gap to the menu keeps the logo standing on its own */
-    margin: 0 0 48px;
+    /* generous gap to the menu keeps the logo standing on its own
+       (the 90% lockup scale already adds visual air around it) */
+    margin: 0 0 36px;
   }
   footer nav {
     display: flex;
