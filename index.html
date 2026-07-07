@@ -206,6 +206,13 @@
     padding: 48px 24px;
     overflow: hidden;
   }
+  /* in-app browsers (LINE etc.) lack svh and fall back to vh, which still
+     stretches — JS measures the visible height once at load into --svh and
+     only re-measures when the width changes (rotation), never on the
+     height-only resizes that toolbar collapse fires */
+  .js-svh .hero {
+    min-height: calc(var(--svh, 1vh) * 94);
+  }
   .hero canvas {
     position: absolute;
     inset: 0;
@@ -818,6 +825,23 @@
 
 <script>
 (function () {
+  /* ---- stable hero height for browsers without svh (LINE in-app etc.) ----
+     measure the visible height once, re-measure only when the width changes
+     (rotation) — toolbar collapse fires height-only resizes we must ignore */
+  var root = document.documentElement;
+  var setSvh = function () {
+    root.style.setProperty('--svh', (window.innerHeight * 0.01) + 'px');
+  };
+  setSvh();
+  root.classList.add('js-svh');
+  var lastW = window.innerWidth;
+  window.addEventListener('resize', function () {
+    if (window.innerWidth !== lastW) {
+      lastW = window.innerWidth;
+      setSvh();
+    }
+  });
+
   /* ---- asymmetric ripples ---- */
   var canvas = document.getElementById('ripples');
   var ctx = canvas.getContext('2d');
