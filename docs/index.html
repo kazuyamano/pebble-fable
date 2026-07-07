@@ -202,8 +202,8 @@
     letter-spacing: 0.14em;
     color: var(--stone);
   }
-  /* phrase-level wrapping: if the sub copy must break, it breaks at the comma */
-  .hero .sub .nb { display: inline-block; }
+  /* phrase-level wrapping: if the copy must break, it breaks at the comma */
+  .nb { display: inline-block; }
   .hero .foot {
     position: absolute;
     bottom: 26px;
@@ -463,7 +463,7 @@
   /* no backdrop-filter here: blurring ::backdrop makes iOS Safari composite
      the backdrop above the dialog itself, leaving the modal invisible */
   dialog.rsv-modal::backdrop {
-    background: rgba(20, 19, 17, 0.55);
+    background: rgba(20, 19, 17, 0.72);
   }
   .rsv-modal h2 {
     font-size: 18px;
@@ -642,7 +642,7 @@
   <span class="vlabel gothic" aria-hidden="true">空間</span>
   <div>
     <p class="en-note gothic">Space</p>
-    <h2>カウンター六席、個室四席。</h2>
+    <h2><span class="nb">カウンター六席、</span><span class="nb">個室四席。</span></h2>
     <p>打ち放しの静けさの中に、カウンター六席と、四名様までの個室をひとつ。大川を望む窓辺で、料理人とソムリエの手元を眺めながらの時間をお過ごしいただけます。</p>
     <figure>
       <div class="ph-duo tall">
