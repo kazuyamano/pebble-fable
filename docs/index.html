@@ -17,6 +17,7 @@
     --line: rgba(36, 34, 29, 0.18);
     --ripple: rgba(36, 34, 29, 0.22);
     --bar: rgba(216, 213, 208, 0.82);
+    --wm: url("assets/img/pebble-wordmark-ink.png");
   }
   @media (prefers-color-scheme: dark) {
     :root {
@@ -28,6 +29,7 @@
       --line: rgba(228, 225, 218, 0.16);
       --ripple: rgba(228, 225, 218, 0.20);
       --bar: rgba(27, 26, 24, 0.82);
+    --wm: url("assets/img/pebble-wordmark-paper.png");
     }
   }
   :root[data-theme="dark"] {
@@ -39,6 +41,7 @@
     --line: rgba(228, 225, 218, 0.16);
     --ripple: rgba(228, 225, 218, 0.20);
     --bar: rgba(27, 26, 24, 0.82);
+    --wm: url("assets/img/pebble-wordmark-paper.png");
   }
   :root[data-theme="light"] {
     --paper: #D8D5D0;
@@ -49,6 +52,7 @@
     --line: rgba(36, 34, 29, 0.18);
     --ripple: rgba(36, 34, 29, 0.22);
     --bar: rgba(216, 213, 208, 0.82);
+    --wm: url("assets/img/pebble-wordmark-ink.png");
   }
 
   * { box-sizing: border-box; }
@@ -81,6 +85,24 @@
   .brand {
     font-family: "Futura", "Avenir Next", "Century Gothic", "Jost", "Hiragino Kaku Gothic ProN", sans-serif;
     text-transform: lowercase;
+  }
+  /* wordmark: the sign lettering itself (custom logotype — no stock face
+     matches its protruding e-bar). Baked in the theme ink color per theme,
+     switched through --wm so the data-theme override works too. */
+  .wm-img {
+    display: block;
+    width: 5em;
+    aspect-ratio: 1239 / 292;
+    margin-inline: auto;
+    background: transparent no-repeat center / contain;
+    background-image: var(--wm);
+  }
+  .wm-text {
+    position: absolute;
+    width: 1px; height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
 
   a { color: inherit; }
@@ -543,7 +565,7 @@
 <nav class="bar gothic" id="bar" aria-label="ヘッダー">
   <a class="mark brand" href="#top">
     <img class="pebbles-sm" src="assets/img/logo-pebbles.png" alt="" aria-hidden="true">
-    <span class="wm">pebble</span>
+    <span class="wm"><span class="wm-text">pebble</span><span class="wm-img" aria-hidden="true"></span></span>
   </a>
   <div class="right">
     <a class="maplink" href="https://www.instagram.com/pebble_wine_osaka/" target="_blank" rel="noopener">Instagram</a>
@@ -557,7 +579,7 @@
   <div class="inner">
     <img class="pebbles" src="assets/img/logo-pebbles.png" alt="" aria-hidden="true">
     <p class="eyebrow gothic">Osaka · Temmabashi</p>
-    <h1 class="wordmark brand">pebble</h1>
+    <h1 class="wordmark brand"><span class="wm-text">pebble</span><span class="wm-img" aria-hidden="true"></span></h1>
     <p class="tagline">大川のほとり、十席のレストラン。</p>
     <p class="sub gothic"><span class="nb">安藤忠雄建築の五階に、</span><span class="nb">ワインと現代イタリアンの一皿を。</span></p>
   </div>
@@ -734,7 +756,7 @@
 
 <footer>
   <img class="pebbles" src="assets/img/logo-pebbles.png" alt="" aria-hidden="true">
-  <p class="mark brand">pebble</p>
+  <p class="mark brand"><span class="wm-text">pebble</span><span class="wm-img" aria-hidden="true"></span></p>
   <nav class="gothic">
     <a href="#concept">Concept</a>
     <a href="#cuisine">Cuisine</a>
