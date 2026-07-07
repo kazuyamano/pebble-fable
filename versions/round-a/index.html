@@ -550,6 +550,12 @@
   .variant-tag { position: fixed; left: 14px; bottom: 14px; z-index: 99;
     font-size: 11px; letter-spacing: 0.12em; background: var(--ink); color: var(--paper);
     padding: 7px 14px; opacity: 0.88; pointer-events: none; }
+  /* study builds: plain overlay instead of <dialog> top layer — the artifact
+     viewer's sandboxed iframe doesn't render the top layer reliably */
+  .modal-shade { position: fixed; inset: 0; background: rgba(20, 19, 17, 0.72);
+    z-index: 90; display: none; }
+  .modal-shade.on { display: block; }
+  dialog.rsv-modal.open { display: block; z-index: 100; }
 </style>
 
 <!-- brand mark: the three pebbles, ellipse-fitted from the logo (moment analysis of icon-pebble.jpg) -->
@@ -861,7 +867,19 @@
 
   /* ---- reservation modal ---- */
   var modal = document.getElementById('rsv-modal');
-  if (modal && typeof modal.showModal === 'function') {
+  if (modal) {
+    var shade = document.createElement('div');
+    shade.className = 'modal-shade';
+    document.body.appendChild(shade);
+    var openM = function () { modal.classList.add('open'); shade.classList.add('on'); };
+    var closeM = function () { modal.classList.remove('open'); shade.classList.remove('on'); };
+    document.querySelectorAll('[data-reserve]').forEach(function (el) {
+      el.addEventListener('click', function (e) { e.preventDefault(); openM(); });
+    });
+    modal.querySelector('[data-close]').addEventListener('click', closeM);
+    shade.addEventListener('click', closeM);
+  }
+  if (false) {
     var modalScrollY = 0;
     document.querySelectorAll('[data-reserve]').forEach(function (el) {
       el.addEventListener('click', function (e) {
